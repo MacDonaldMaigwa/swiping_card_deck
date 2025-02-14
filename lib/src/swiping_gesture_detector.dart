@@ -15,6 +15,7 @@ class SwipingGestureDetector<T> extends StatefulWidget {
     this.swipeAnimationDuration = const Duration(milliseconds: 500),
     required this.swipeThreshold,
     this.disableDragging = false,
+    this.onDrag, // Added onDrag callback
   }) : super(key: key);
 
   final List<T> cardDeck;
@@ -25,6 +26,7 @@ class SwipingGestureDetector<T> extends StatefulWidget {
   final double cardWidth;
   final Duration swipeAnimationDuration;
   final bool disableDragging;
+  final Function(double)? onDrag; // Make the callback optional
 
   Alignment dragAlignment = Alignment.center;
 
@@ -91,6 +93,8 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
   void _onPanUpdate(DragUpdateDetails details) {
     setState(() {
       widget.dragAlignment += Alignment(details.delta.dx, details.delta.dy);
+      // Call the onDrag callback with the horizontal drag position
+      widget.onDrag?.call(widget.dragAlignment.x);  // Safe call using ?.
     });
   }
 

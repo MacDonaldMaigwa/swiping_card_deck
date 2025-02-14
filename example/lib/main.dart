@@ -28,6 +28,7 @@ class ExamplePage extends StatelessWidget {
       rotationFactor: 0.8 / 3.14,
       swipeAnimationDuration: const Duration(milliseconds: 500),
       disableDragging: false,
+      onDrag: (double dragDistance) => debugPrint("Dragged $dragDistance"),
     );
     return Column(
       mainAxisSize: MainAxisSize.min,

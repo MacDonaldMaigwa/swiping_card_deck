@@ -24,7 +24,9 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
       this.rotationFactor = .8 / 3.14,
       this.swipeThreshold,
       this.swipeAnimationDuration = const Duration(milliseconds: 500),
-      this.disableDragging = false})
+      this.disableDragging = false,
+      this.onDrag // Added onDrag callback
+      })
       : super(key: key) {
     cardDeck = cardDeck.reversed.toList();
   }
@@ -65,6 +67,9 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
   /// The [Size] of the screen.
   late final Size screenSize;
 
+  /// Callback function that is called every time when card is being dragged.
+  final Function(double)? onDrag;
+
   bool animationActive = false;
   static const String left = "left";
   static const String right = "right";
@@ -82,6 +87,7 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
       minimumVelocity: minimumVelocity,
       swipeAnimationDuration: swipeAnimationDuration,
       disableDragging: disableDragging,
+      onDrag: onDrag,
     );
     return SizedBox(
       child: Column(
