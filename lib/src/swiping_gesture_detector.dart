@@ -16,6 +16,7 @@ class SwipingGestureDetector<T> extends StatefulWidget {
     required this.swipeThreshold,
     this.disableDragging = false,
     this.onDrag, // Added onDrag callback
+    this.onEnd,   // Added onEnd callback
   }) : super(key: key);
 
   final List<T> cardDeck;
@@ -27,6 +28,7 @@ class SwipingGestureDetector<T> extends StatefulWidget {
   final Duration swipeAnimationDuration;
   final bool disableDragging;
   final Function(double)? onDrag; // Make the callback optional
+  final VoidCallback? onEnd;  // Optional callback when dragging ends
 
   Alignment dragAlignment = Alignment.center;
 
@@ -115,6 +117,8 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
     } else {
       animateBackToDeck(details.velocity.pixelsPerSecond, screenSize);
     }
+     widget.onEnd?.call(); // Call onEnd after handling swipe/back animation
+
     setState(() {
       widget.dragAlignment = Alignment.center;
     });

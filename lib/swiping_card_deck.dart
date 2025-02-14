@@ -1,6 +1,3 @@
-/// The swiping_card_deck library contains the [SwipingCardDeck] widget
-/// which allows a user to swipe through a deck of [Card] widgets. To
-/// swipe through any [Widget], use the generic [SwipingDeck] class.
 library swiping_card_deck;
 
 import 'package:flutter/material.dart';
@@ -25,7 +22,8 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
       this.swipeThreshold,
       this.swipeAnimationDuration = const Duration(milliseconds: 500),
       this.disableDragging = false,
-      this.onDrag // Added onDrag callback
+      this.onDrag, // Added onDrag callback
+      this.onEnd, // Added onEnd callback
       })
       : super(key: key) {
     cardDeck = cardDeck.reversed.toList();
@@ -70,6 +68,10 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
   /// Callback function that is called every time when card is being dragged.
   final Function(double)? onDrag;
 
+   /// Callback function that is called when the card is released after dragging
+   /// regardless of whether it was swiped or not.
+  final VoidCallback? onEnd;
+
   bool animationActive = false;
   static const String left = "left";
   static const String right = "right";
@@ -88,6 +90,7 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
       swipeAnimationDuration: swipeAnimationDuration,
       disableDragging: disableDragging,
       onDrag: onDrag,
+      onEnd: onEnd,
     );
     return SizedBox(
       child: Column(
